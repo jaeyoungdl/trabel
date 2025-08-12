@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useExpenses, Expense } from '../../hooks/useExpenses';
+import { useExpenses } from '../../hooks/useExpenses';
 import { usePlaces } from '../../hooks/usePlaces';
 
 interface ExpenseManagerProps {
@@ -20,7 +20,7 @@ interface ExpenseManagerProps {
   onPageChange?: (page: 'schedule' | 'expense') => void;
 }
 
-export default function ExpenseManager({ tripData, tripId, onBack, sidebarOpen, setSidebarOpen, onPageChange }: ExpenseManagerProps) {
+export default function ExpenseManager({ tripData, tripId, onBack, sidebarOpen, setSidebarOpen }: ExpenseManagerProps) {
   const { expenses, loading, addExpense, updateExpense, deleteExpense, getTotalSpent, getCategoryTotals, getDailyExpenses } = useExpenses(tripId);
   const { places } = usePlaces(tripId);
   

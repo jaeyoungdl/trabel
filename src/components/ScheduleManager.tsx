@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Calendar, Clock, MapPin, Plus, Check, Edit, Trash2 } from 'lucide-react';
+import { Calendar, Clock, MapPin, Plus, Check, Trash2 } from 'lucide-react';
 
 interface ScheduleItem {
   id: string;

@@ -9,7 +9,6 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-  closestCenter,
   useDroppable,
   rectIntersection,
   MeasuringStrategy,
@@ -28,7 +27,7 @@ import ExpenseManager from '../components/ExpenseManager';
 // 컴포넌트 최상단에 Google Places 타입 정의 추가
 declare global {
   interface Window {
-    google: any;
+    google: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   }
 }
 
@@ -142,8 +141,6 @@ export default function Home() {
   // DB에서 장소 데이터 가져오기 (actualTripId가 있을 때만)
   const { 
     places, 
-    loading, 
-    error, 
     addPlace, 
     updatePlace, 
     deletePlace, 
@@ -800,7 +797,7 @@ export default function Home() {
         language: 'ko'
       };
 
-      service.textSearch(request, (results: any[], status: any) => {
+      service.textSearch(request, (results: PlaceResult[] | null, status: string) => {
         if (status === window.google.maps.places.PlacesServiceStatus.OK && results) {
           const formattedResults: PlaceResult[] = results.slice(0, 5).map(place => ({
             place_id: place.place_id,
@@ -808,8 +805,8 @@ export default function Home() {
             formatted_address: place.formatted_address,
             geometry: {
               location: {
-                lat: place.geometry.location.lat(),
-                lng: place.geometry.location.lng()
+                lat: (place.geometry.location as any).lat(),
+                lng: (place.geometry.location as any).lng()
               }
             },
             types: place.types,

@@ -44,7 +44,7 @@ export class Database {
     order: number;
     category: string;
     placeId?: string;
-    operatingHours?: any;
+    operatingHours?: Record<string, string[]>;
     notes?: string;
     tripId: string;
   }) {
@@ -83,10 +83,20 @@ export class Database {
     }
   }
 
-  static async updatePlace(id: string, data: any) {
+  static async updatePlace(id: string, data: Partial<{
+    name: string;
+    address: string;
+    time: string;
+    duration: string;
+    day: number;
+    order: number;
+    category: string;
+    operatingHours: Record<string, string[]> | string;
+    notes: string;
+  }>) {
     const client = await pool.connect();
     try {
-      const processedData = { ...data };
+      const processedData: Record<string, unknown> = { ...data };
       
       // operatingHours가 객체이면 JSON 문자열로 변환
       if (processedData.operatingHours && typeof processedData.operatingHours === 'object') {
@@ -187,7 +197,13 @@ export class Database {
     }
   }
 
-  static async updateExpense(id: string, data: any) {
+  static async updateExpense(id: string, data: Partial<{
+    amount: number;
+    description: string;
+    category: string;
+    date: string;
+    currency: string;
+  }>) {
     const client = await pool.connect();
     try {
       const fields = Object.keys(data).map((key, index) => `"${key}" = $${index + 2}`).join(', ');
