@@ -129,5 +129,3 @@ MIT License
 5. Open a Pull Request
 
 ---
-
-즐거운 태국 여행 되세요! 🌴🍜🏖️ 
